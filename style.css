@@ -1,222 +1,104 @@
 :root {
     --duo-green: #58cc02;
-    --duo-green-hover: #46a302;
     --duo-green-shadow: #58a700;
     --duo-red: #ff4b4b;
     --duo-red-shadow: #ea2b2b;
+    --duo-blue: #1cb0f6;
     --duo-bg: #f7f7f7;
     --duo-card-bg: #ffffff;
     --duo-text: #4b4b4b;
     --duo-border: #e5e5e5;
-    --duo-blue: #1cb0f6;
 }
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     background-color: var(--duo-bg);
     color: var(--duo-text);
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+    margin: 0; padding: 0;
+    display: flex; flex-direction: column; min-height: 100vh;
 }
 
 .duo-header {
-    background: white;
-    border-bottom: 2px solid var(--duo-border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    background: white; border-bottom: 2px solid var(--duo-border);
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1rem 2rem; position: sticky; top: 0; z-index: 100;
 }
 
-.logo {
-    font-weight: 900;
-    font-size: 1.25rem;
-    color: var(--duo-green);
-}
-
-.stats-bar {
-    display: flex;
-    gap: 1.5rem;
-    font-weight: bold;
-    font-size: 1rem;
-}
+.logo { font-weight: 900; font-size: 1.25rem; color: var(--duo-green); }
+.stats-bar { display: flex; gap: 1.5rem; font-weight: bold; }
 
 .level-selector {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    background: white;
-    padding: 0.75rem;
-    border-bottom: 1px solid var(--duo-border);
+    display: flex; justify-content: center; gap: 0.5rem;
+    background: white; padding: 0.75rem; border-bottom: 1px solid var(--duo-border);
 }
 
 .level-btn {
-    padding: 0.5rem 1rem;
-    border: 2px solid var(--duo-border);
-    background: white;
-    font-weight: bold;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.1s;
-    color: #afafaf;
+    padding: 0.5rem 1rem; border: 2px solid var(--duo-border);
+    background: white; font-weight: bold; border-radius: 12px; cursor: pointer; color: #afafaf;
 }
 
-.level-btn.active {
-    border-color: var(--duo-blue);
-    color: var(--duo-blue);
-    background: #ddf4ff;
-}
+.level-btn.active { border-color: var(--duo-blue); color: var(--duo-blue); background: #ddf4ff; }
 
 .duo-main {
-    max-width: 750px;
-    width: 100%;
-    margin: 2rem auto;
-    padding: 0 1rem;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+    max-width: 750px; width: 100%; margin: 1.5rem auto; padding: 0 1rem;
+    display: flex; flex-direction: column; gap: 1.5rem; flex: 1;
 }
 
 .duo-card {
-    background: var(--duo-card-bg);
-    border: 2px solid var(--duo-border);
-    border-radius: 20px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 0 0 var(--duo-border);
+    background: var(--duo-card-bg); border: 2px solid var(--duo-border);
+    border-radius: 20px; padding: 1.5rem; box-shadow: 0 4px 0 0 var(--duo-border);
 }
 
 .knowledge-container {
-    max-height: 220px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    margin-top: 1rem;
-    padding-right: 5px;
+    max-height: 180px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem;
 }
 
 .mini-item {
-    background: #fdfdfd;
-    border: 1px solid var(--duo-border);
-    padding: 0.75rem;
-    border-radius: 12px;
+    background: #fdfdfd; border: 1px solid var(--duo-border); padding: 0.6rem 0.8rem;
+    border-radius: 12px; cursor: pointer; transition: background 0.2s;
 }
 
-.quiz-header-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
+.mini-item:hover { background: #f0fdf4; }
+
+.quiz-header-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+.badge { background: #ddf4ff; color: var(--duo-blue); padding: 0.25rem 0.75rem; border-radius: 8px; font-weight: bold; }
+
+.progress-bar-container { background: var(--duo-border); height: 14px; border-radius: 7px; overflow: hidden; margin-bottom: 1.5rem; }
+.progress-fill { background: var(--duo-green); height: 100%; width: 0%; transition: width 0.3s; }
+
+.q-title-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+#quiz-question { font-size: 1.25rem; font-weight: 700; margin: 0; }
+
+.icon-btn {
+    background: none; border: 2px solid var(--duo-border); border-radius: 50%;
+    width: 40px; height: 40px; cursor: pointer; font-size: 1.1rem;
 }
 
-.badge {
-    background: #ddf4ff;
-    color: var(--duo-blue);
-    padding: 0.25rem 0.75rem;
-    border-radius: 8px;
-    font-weight: bold;
-    font-size: 0.85rem;
-}
-
-.progress-bar-container {
-    background: var(--duo-border);
-    height: 14px;
-    border-radius: 7px;
-    overflow: hidden;
-    margin-bottom: 1.5rem;
-}
-
-.progress-fill {
-    background: var(--duo-green);
-    height: 100%;
-    width: 0%;
-    transition: width 0.3s ease;
-    border-radius: 7px;
-}
-
-#quiz-question {
-    font-size: 1.35rem;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-}
-
-.options-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-}
+.options-grid { display: flex; flex-direction: column; gap: 0.75rem; }
 
 .duo-opt-btn {
-    background: white;
-    border: 2px solid var(--duo-border);
-    border-bottom-width: 4px;
-    border-radius: 16px;
-    padding: 1rem;
-    font-size: 1.05rem;
-    font-weight: 600;
-    text-align: left;
-    cursor: pointer;
-    transition: all 0.1s;
-    color: var(--duo-text);
+    background: white; border: 2px solid var(--duo-border); border-bottom-width: 4px;
+    border-radius: 16px; padding: 0.9rem 1.2rem; font-size: 1rem; font-weight: 600;
+    text-align: left; cursor: pointer; transition: all 0.1s; color: var(--duo-text);
 }
 
-.duo-opt-btn:hover:not(:disabled) {
-    background: #f7f7f7;
-    border-color: #cfcfcf;
-}
+.duo-opt-btn:hover { background: #f7f7f7; }
+.duo-opt-btn.selected { border-color: var(--duo-blue); background: #ddf4ff; color: #0484c3; }
+.duo-opt-btn.matched { visibility: hidden; }
 
-.duo-opt-btn.selected {
-    border-color: var(--duo-blue);
-    background: #ddf4ff;
-    color: #0484c3;
-}
+.match-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
 
 .feedback-footer {
-    margin-top: 1.5rem;
-    padding-top: 1rem;
-    border-top: 2px solid var(--duo-border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    margin-top: 1.5rem; padding-top: 1rem; border-top: 2px solid var(--duo-border);
+    display: flex; justify-content: space-between; align-items: center;
 }
 
-.feedback-msg {
-    font-size: 1.2rem;
-    font-weight: 800;
-}
+.feedback-msg { font-size: 1.1rem; font-weight: 800; }
 
 .duo-btn {
-    background: var(--duo-green);
-    color: white;
-    border: none;
-    border-bottom: 4px solid var(--duo-green-shadow);
-    padding: 0.75rem 2rem;
-    font-size: 1.1rem;
-    font-weight: 800;
-    border-radius: 16px;
-    cursor: pointer;
-    transition: all 0.1s;
+    background: var(--duo-green); color: white; border: none; border-bottom: 4px solid var(--duo-green-shadow);
+    padding: 0.75rem 1.8rem; font-size: 1.05rem; font-weight: 800; border-radius: 16px; cursor: pointer;
 }
 
-.duo-btn:active {
-    transform: translateY(2px);
-    border-bottom-width: 2px;
-}
-
-.hidden {
-    display: none !important;
-}
-
-footer {
-    text-align: center;
-    padding: 1.5rem;
-    color: #afafaf;
-    font-size: 0.85rem;
-}
+.duo-btn:active { transform: translateY(2px); border-bottom-width: 2px; }
+.hidden { display: none !important; }

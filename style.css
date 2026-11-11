@@ -1,16 +1,20 @@
 :root {
-    --primary: #4f46e5;
-    --primary-hover: #4338ca;
-    --bg-color: #f8fafc;
-    --card-bg: #ffffff;
-    --text-color: #1e293b;
-    --border-color: #e2e8f0;
+    --duo-green: #58cc02;
+    --duo-green-hover: #46a302;
+    --duo-green-shadow: #58a700;
+    --duo-red: #ff4b4b;
+    --duo-red-shadow: #ea2b2b;
+    --duo-bg: #f7f7f7;
+    --duo-card-bg: #ffffff;
+    --duo-text: #4b4b4b;
+    --duo-border: #e5e5e5;
+    --duo-blue: #1cb0f6;
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-color);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--duo-bg);
+    color: var(--duo-text);
     margin: 0;
     padding: 0;
     display: flex;
@@ -18,16 +22,29 @@ body {
     min-height: 100vh;
 }
 
-header {
-    background: linear-gradient(135deg, #4f46e5, #3b82f6);
-    color: white;
-    text-align: center;
-    padding: 2.5rem 1rem;
+.duo-header {
+    background: white;
+    border-bottom: 2px solid var(--duo-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
-header h1 {
-    margin: 0 0 0.5rem 0;
-    font-size: 2rem;
+.logo {
+    font-weight: 900;
+    font-size: 1.25rem;
+    color: var(--duo-green);
+}
+
+.stats-bar {
+    display: flex;
+    gap: 1.5rem;
+    font-weight: bold;
+    font-size: 1rem;
 }
 
 .level-selector {
@@ -35,32 +52,29 @@ header h1 {
     justify-content: center;
     gap: 0.5rem;
     background: white;
-    padding: 1rem;
-    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-    position: sticky;
-    top: 0;
-    z-index: 10;
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--duo-border);
 }
 
 .level-btn {
-    padding: 0.5rem 1.25rem;
-    border: 2px solid var(--border-color);
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--duo-border);
     background: white;
-    color: var(--text-color);
     font-weight: bold;
-    border-radius: 9999px;
+    border-radius: 12px;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.1s;
+    color: #afafaf;
 }
 
-.level-btn.active, .level-btn:hover {
-    background-color: var(--primary);
-    color: white;
-    border-color: var(--primary);
+.level-btn.active {
+    border-color: var(--duo-blue);
+    color: var(--duo-blue);
+    background: #ddf4ff;
 }
 
-main {
-    max-width: 800px;
+.duo-main {
+    max-width: 750px;
     width: 100%;
     margin: 2rem auto;
     padding: 0 1rem;
@@ -70,68 +84,139 @@ main {
     gap: 1.5rem;
 }
 
-.card-container {
-    background: var(--card-bg);
-    border-radius: 12px;
+.duo-card {
+    background: var(--duo-card-bg);
+    border: 2px solid var(--duo-border);
+    border-radius: 20px;
     padding: 1.5rem;
-    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+    box-shadow: 0 4px 0 0 var(--duo-border);
 }
 
-.card-container h2 {
-    margin-top: 0;
-    font-size: 1.25rem;
-    border-bottom: 2px solid var(--border-color);
-    padding-bottom: 0.5rem;
-}
-
-.content-box {
+.knowledge-container {
+    max-height: 220px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
     margin-top: 1rem;
-    line-height: 1.6;
+    padding-right: 5px;
 }
 
-.item-card {
-    background: #f1f5f9;
-    padding: 0.75rem 1rem;
+.mini-item {
+    background: #fdfdfd;
+    border: 1px solid var(--duo-border);
+    padding: 0.75rem;
+    border-radius: 12px;
+}
+
+.quiz-header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.badge {
+    background: #ddf4ff;
+    color: var(--duo-blue);
+    padding: 0.25rem 0.75rem;
     border-radius: 8px;
-    margin-bottom: 0.75rem;
+    font-weight: bold;
+    font-size: 0.85rem;
 }
 
-.item-card strong {
-    color: var(--primary);
+.progress-bar-container {
+    background: var(--duo-border);
+    height: 14px;
+    border-radius: 7px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
 }
 
-#quiz-options button {
-    display: block;
-    width: 100%;
-    text-align: left;
-    padding: 0.75rem 1rem;
-    margin: 0.5rem 0;
-    border: 1px solid var(--border-color);
+.progress-fill {
+    background: var(--duo-green);
+    height: 100%;
+    width: 0%;
+    transition: width 0.3s ease;
+    border-radius: 7px;
+}
+
+#quiz-question {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+.options-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.duo-opt-btn {
     background: white;
-    border-radius: 6px;
+    border: 2px solid var(--duo-border);
+    border-bottom-width: 4px;
+    border-radius: 16px;
+    padding: 1rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    text-align: left;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: all 0.1s;
+    color: var(--duo-text);
 }
 
-#quiz-options button:hover {
-    background: #f8fafc;
-    border-color: var(--primary);
+.duo-opt-btn:hover:not(:disabled) {
+    background: #f7f7f7;
+    border-color: #cfcfcf;
 }
 
-#next-btn {
-    margin-top: 1rem;
-    padding: 0.5rem 1.5rem;
-    background-color: var(--primary);
+.duo-opt-btn.selected {
+    border-color: var(--duo-blue);
+    background: #ddf4ff;
+    color: #0484c3;
+}
+
+.feedback-footer {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 2px solid var(--duo-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.feedback-msg {
+    font-size: 1.2rem;
+    font-weight: 800;
+}
+
+.duo-btn {
+    background: var(--duo-green);
     color: white;
     border: none;
-    border-radius: 6px;
+    border-bottom: 4px solid var(--duo-green-shadow);
+    padding: 0.75rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 800;
+    border-radius: 16px;
     cursor: pointer;
+    transition: all 0.1s;
+}
+
+.duo-btn:active {
+    transform: translateY(2px);
+    border-bottom-width: 2px;
+}
+
+.hidden {
+    display: none !important;
 }
 
 footer {
     text-align: center;
     padding: 1.5rem;
-    background: #1e293b;
-    color: #94a3b8;
-    font-size: 0.875rem;
+    color: #afafaf;
+    font-size: 0.85rem;
 }

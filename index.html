@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;700;900&family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="extras.css">
+    <link rel="stylesheet" href="dashboard-mobile.css">
 </head>
 <body>
 
@@ -109,11 +110,12 @@
                     <div class="activity-heading">
                         <div><h3>📊 學習活動</h3><p id="activity-summary" class="muted small">累積練習，持續進步</p></div>
                         <div class="chart-tabs" role="group" aria-label="統計期間">
-                            <button class="chart-tab active" data-period="week" type="button" aria-pressed="true">本週</button>
-                            <button class="chart-tab" data-period="month" type="button" aria-pressed="false">本月</button>
+                            <button class="chart-tab active" data-period="7" type="button" aria-pressed="true">7 天</button>
+                            <button class="chart-tab" data-period="30" type="button" aria-pressed="false">30 天</button>
+                            <button class="chart-tab" data-period="90" type="button" aria-pressed="false">90 天</button>
                         </div>
                     </div>
-                    <div id="activity-chart" class="activity-chart" role="img" aria-label="最近一週每日答題統計"></div>
+                    <div id="activity-chart" class="activity-chart" role="img" aria-label="最近 7 天每日答題統計"></div>
                 </div>
                 <div class="achievement-heading"><h3 class="achievement-title">🏅 學習里程碑</h3><span id="achievement-count" class="achievement-total">0 / 5</span></div>
                 <div id="achievement-list" class="achievement-list" aria-live="polite"></div>
@@ -189,6 +191,7 @@
     <script src="stt.js"></script>
     <script src="app.js"></script>
     <script src="extras.js"></script>
+    <script src="dashboard-mobile.js"></script>
     <script src="auth.js"></script>
 </body>
 </html>

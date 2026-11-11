@@ -1,0 +1,62 @@
+/* 高階學習儀表板：折線圖、月曆、成就進度與驚喜動畫 */
+.line-chart-svg { display: block; width: 100%; min-height: 150px; overflow: visible; }
+.line-grid { stroke: var(--bd); stroke-width: 1; stroke-dasharray: 4 5; }
+.line-axis-label, .line-x-label { fill: var(--mut); font-family: inherit; font-size: 11px; }
+.line-area { fill: url(#line-area-gradient); animation: area-appear .8s ease both; }
+.line-path { fill: none; stroke: var(--g); stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1200; stroke-dashoffset: 1200; animation: line-draw 1.15s cubic-bezier(.2,.8,.2,1) forwards; filter: drop-shadow(0 3px 4px rgba(88,204,2,.22)); }
+.line-point { fill: var(--card); stroke: var(--g); stroke-width: 3; cursor: pointer; transition: r .18s, fill .18s; animation: point-pop .4s both; }
+.line-point:hover, .line-point.current { fill: var(--b); stroke: var(--card); stroke-width: 2.5; }
+@keyframes line-draw { to { stroke-dashoffset: 0; } }
+@keyframes area-appear { from { opacity: 0; } to { opacity: 1; } }
+@keyframes point-pop { from { opacity: 0; } to { opacity: 1; } }
+.study-calendar { margin-top: .9rem; padding: 1rem; border: 1px solid var(--bd); border-radius: 18px; background: var(--card); animation: calendar-in .35s ease both; }
+@keyframes calendar-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.calendar-heading { display: flex; justify-content: space-between; align-items: center; gap: .6rem; margin-bottom: .75rem; }
+.calendar-heading h3 { margin: 0 0 .1rem; font-size: 1rem; }
+.calendar-heading p { margin: 0; }
+.calendar-nav { display: flex; align-items: center; gap: .55rem; font-size: .86rem; }
+.calendar-move { display: grid; place-items: center; width: 30px; height: 30px; border: 1px solid var(--bd); border-radius: 9px; background: var(--soft); color: var(--tx); font-size: 1.2rem; cursor: pointer; transition: transform .18s, background .18s; }
+.calendar-move:hover:not(:disabled) { transform: scale(1.08); background: rgba(88,204,2,.12); }
+.calendar-move:disabled { opacity: .35; cursor: default; }
+.calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: clamp(3px, 1vw, 7px); }
+.calendar-weekday { padding: .2rem 0; color: var(--mut); font-size: .7rem; font-weight: 800; text-align: center; }
+.calendar-cell { display: grid; place-items: center; aspect-ratio: 1; min-height: 27px; border: 1px solid transparent; border-radius: 9px; background: var(--soft); color: var(--mut); font-size: .76rem; transition: transform .15s, box-shadow .15s; }
+.calendar-cell:not(.empty):hover { transform: scale(1.08); box-shadow: 0 2px 8px rgba(0,0,0,.12); }
+.calendar-cell.empty { background: transparent; }
+.calendar-cell.heat-0 { background: var(--soft); }
+.calendar-cell.heat-1 { background: rgba(88,204,2,.2); color: var(--tx); }
+.calendar-cell.heat-2 { background: rgba(88,204,2,.4); color: var(--tx); }
+.calendar-cell.heat-3 { background: rgba(88,204,2,.65); color: #17330a; }
+.calendar-cell.heat-4 { background: #58cc02; color: #17330a; font-weight: 900; }
+.calendar-cell.calendar-today { border-color: var(--b); box-shadow: 0 0 0 2px rgba(28,176,246,.16); color: var(--tx); font-weight: 900; }
+.calendar-legend { display: flex; align-items: center; gap: 4px; margin-top: .65rem; color: var(--mut); font-size: .68rem; }
+.calendar-legend i { width: 12px; height: 12px; border-radius: 4px; background: var(--soft); }
+.calendar-legend .heat-1 { background: rgba(88,204,2,.2); }
+.calendar-legend .heat-2 { background: rgba(88,204,2,.4); }
+.calendar-legend .heat-3 { background: rgba(88,204,2,.65); }
+.calendar-legend .heat-4 { background: #58cc02; }
+.calendar-total { margin-left: auto; font-weight: 800; }
+.achievement { min-height: 84px; }
+.achievement > span:nth-child(2) { flex: 1; min-width: 0; }
+.achievement-progress { display: block; margin-top: .35rem; }
+.achievement-progress-text { display: block; color: var(--mut); font-size: .68rem; font-weight: 700; }
+.achievement-progress-track { display: block; height: 5px; margin-top: 4px; overflow: hidden; border-radius: 99px; background: var(--bd); }
+.achievement-progress-track > span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--b), #63d4ff); transition: width .55s cubic-bezier(.2,.8,.2,1); }
+.achievement.unlocked .achievement-progress-track > span { background: linear-gradient(90deg, var(--g), #a4e95e); }
+.milestone-card { overflow: hidden; }
+.milestone-card.surprise-active .milestone-icon { animation: surprise-icon .8s cubic-bezier(.2,.8,.2,1) both; box-shadow: 0 0 0 10px rgba(88,204,2,.08), 0 0 45px rgba(88,204,2,.22); }
+@keyframes surprise-icon { 35% { transform: rotate(-12deg) scale(1.28); } 70% { transform: rotate(8deg) scale(.92); } }
+.confetti-bit { position: absolute; z-index: 3; top: -12px; left: var(--x); width: 8px; height: 12px; border-radius: 2px; background: var(--color); pointer-events: none; animation: confetti-fall 1.9s var(--delay) cubic-bezier(.2,.65,.3,1) forwards; }
+.confetti-bit:nth-child(3n) { width: 6px; height: 6px; border-radius: 50%; }
+@keyframes confetti-fall { to { transform: translate3d(var(--fall-x, 20px), 440px, 0) rotate(var(--spin)); opacity: 0; } }
+@media (max-width: 520px) {
+    .study-calendar { padding: .75rem .6rem; }
+    .calendar-cell { min-height: 25px; border-radius: 7px; font-size: .7rem; }
+    .calendar-nav { gap: .3rem; font-size: .78rem; }
+    .achievement { min-height: 93px; }
+    .line-chart-svg { min-height: 125px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .line-area, .line-path, .line-point, .study-calendar, .milestone-card.surprise-active .milestone-icon, .confetti-bit { animation: none !important; }
+    .achievement-progress-track > span { transition: none; }
+}

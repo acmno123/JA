@@ -23,7 +23,6 @@
   function readActivity(email) {
     const saved = Store.get(activityKey(email), {});
     const activity = saved && typeof saved === "object" ? saved : {};
-    // Migrate the previous single-day counter without discarding it.
     const legacy = Store.get(dailyKey(email), {});
     if (legacy.date && Number(legacy.count) > 0 && !activity[legacy.date]) activity[legacy.date] = Number(legacy.count);
     return activity;
@@ -33,7 +32,6 @@
     const activity = readActivity(email);
     const key = today();
     activity[key] = (Number(activity[key]) || 0) + 1;
-    // Keep about one year of local history.
     const cutoff = new Date();
     cutoff.setDate(cutoff.getDate() - 370);
     const minKey = dateKey(cutoff);
@@ -121,7 +119,6 @@
       activeEmail = email;
     } else if (notify) {
       earned.filter(item => !unlocked.has(item.id)).forEach(item => {
-        document.querySelector(`[data-achievement="${item.id}"]`)?.classList.add("just-unlocked");
         if (typeof SoundFX !== "undefined" && SoundFX.playAchievement) SoundFX.playAchievement();
         queueNotice(item.icon, "成就解鎖！", `「${item.title}」— ${item.hint}`);
         unlocked.add(item.id);
@@ -203,4 +200,14 @@
     if (event.key === "Escape" && modalOpen) closeNotice();
   });
   render();
+
+  // Load the optional calendar, line chart and achievement-detail enhancements.
+  const style = document.createElement("link");
+  style.rel = "stylesheet";
+  style.href = "dashboard-plus.css";
+  document.head.appendChild(style);
+  const script = document.createElement("script");
+  script.src = "dashboard-plus.js";
+  script.defer = true;
+  document.body.appendChild(script);
 })();

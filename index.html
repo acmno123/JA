@@ -3,15 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>N1-N5 日文全方位學習網</title>
+    <title>Duolingo 級日文闖關學習網 (N5-N1)</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>🇯🇵 日文全方位檢定學習網 (N5 - N1)</h1>
-        <p>選擇你的目標級別，解鎖文法、單字與自我挑戰測驗！</p>
+    <!-- 頂部導覽列 / 狀態列 -->
+    <header class="duo-header">
+        <div class="logo">🦉 Duolingo 級日文特訓</div>
+        <div class="stats-bar">
+            <div class="stat-item">❤️ <span id="lives-count">5</span></div>
+            <div class="stat-item">🔥 連擊 <span id="streak-count">0</span></div>
+            <div class="stat-item">⭐ 經驗 <span id="xp-count">0</span> XP</div>
+        </div>
     </header>
 
+    <!-- 級別與單元選單 -->
     <nav class="level-selector">
         <button class="level-btn active" data-level="N5">N5 初級</button>
         <button class="level-btn" data-level="N4">N4 基礎</button>
@@ -20,30 +26,41 @@
         <button class="level-btn" data-level="N1">N1 專家</button>
     </nav>
 
-    <main>
-        <section class="card-container">
-            <h2>📚 重點文法與句型</h2>
-            <div id="grammar-box" class="content-box">載入中...</div>
+    <main class="duo-main">
+        <!-- 知識點查看區 -->
+        <section class="duo-card info-section">
+            <h2>📚 本級別核心文法與單字</h2>
+            <div id="knowledge-box" class="knowledge-container">載入中...</div>
         </section>
 
-        <section class="card-container">
-            <h2>📖 核心單字清單</h2>
-            <div id="vocab-box" class="content-box">載入中...</div>
-        </section>
+        <!-- 遊戲化闖關測驗區 -->
+        <section class="duo-card quiz-section" id="quiz-card-area">
+            <div class="quiz-header-bar">
+                <span id="quiz-type-tag" class="badge">單字挑戰</span>
+                <span id="progress-text">進度 1 / 5</span>
+            </div>
+            
+            <!-- 進度條 -->
+            <div class="progress-bar-container">
+                <div id="progress-fill" class="progress-fill" style="width: 20%;"></div>
+            </div>
 
-        <section class="card-container quiz-section">
-            <h2>✍️ 級別自我檢定測驗</h2>
+            <!-- 題目容器 -->
             <div id="quiz-box">
-                <p id="quiz-question">請選擇級別開始測驗</p>
-                <div id="quiz-options"></div>
-                <button id="next-btn" style="display:none;">下一題</button>
-                <p id="quiz-result"></p>
+                <h3 id="quiz-question">載入題目中...</h3>
+                <div id="quiz-options" class="options-grid"></div>
+            </div>
+
+            <!-- 回饋與下一步按鈕 -->
+            <div id="feedback-footer" class="feedback-footer hidden">
+                <div id="feedback-msg" class="feedback-msg"></div>
+                <button id="next-question-btn" class="duo-btn primary">繼續</button>
             </div>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2026 Japanese Learning Hub. All rights reserved.</p>
+        <p>&copy; 2026 Duolingo Style Japanese Learning Platform.</p>
     </footer>
 
     <script src="script.js"></script>

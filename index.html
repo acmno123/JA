@@ -1,67 +1,154 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Duolingo 日文無盡特訓</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#58cc02">
+    <title>日語無盡特訓 · JA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;700;900&family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header class="duo-header">
-        <div class="logo">🦉 日語無盡特訓</div>
-        <div class="stats-bar">
-            <div class="stat-item">❤️ <span id="lives-count">5</span></div>
-            <div class="stat-item">🔥 <span id="streak-count">0</span></div>
-            <div class="stat-item">⭐ <span id="xp-count">0</span> XP</div>
+
+    <!-- 登入／註冊 -->
+    <section id="auth-screen" class="auth-wrap hidden">
+        <div class="card auth-card">
+            <div class="owl">🦉</div>
+            <h1>日語無盡特訓</h1>
+            <p class="muted">N5 → N1，刷到你的日文天花板</p>
+            <div class="seg">
+                <button class="seg-btn active" data-auth="login" type="button">登入</button>
+                <button class="seg-btn" data-auth="register" type="button">註冊</button>
+            </div>
+            <form id="auth-form" novalidate>
+                <input class="field hidden" id="f-name" placeholder="暱稱" maxlength="20" autocomplete="nickname">
+                <input class="field" id="f-email" type="email" placeholder="電子郵件" autocomplete="email">
+                <input class="field" id="f-pw" type="password" placeholder="密碼（至少 6 碼）" autocomplete="current-password">
+                <input class="field hidden" id="f-pw2" type="password" placeholder="再次輸入密碼" autocomplete="new-password">
+                <p class="err" id="auth-err"></p>
+                <button class="duo-btn full" id="auth-submit" type="submit">登入</button>
+            </form>
+            <p class="muted small">資料保存在此瀏覽器，僅供個人學習使用。</p>
         </div>
-    </header>
+    </section>
 
-    <nav class="level-selector">
-        <button class="level-btn active" data-level="N5">N5 初級</button>
-        <button class="level-btn" data-level="N4">N4 基礎</button>
-        <button class="level-btn" data-level="N3">N3 中級</button>
-        <button class="level-btn" data-level="N2">N2 高級</button>
-        <button class="level-btn" data-level="N1">N1 專家</button>
-    </nav>
-
-    <main class="duo-main">
-        <!-- 知識卡片區 -->
-        <section class="duo-card info-section">
-            <h2>📚 級別重點單字與文法 (點擊可發音)</h2>
-            <div id="knowledge-box" class="knowledge-container">載入中...</div>
-        </section>
-
-        <!-- 互動測驗區 -->
-        <section class="duo-card quiz-section">
-            <div class="quiz-header-bar">
-                <span id="quiz-type-tag" class="badge">單字挑戰</span>
-                <span id="progress-text">進度 1 / 5</span>
+    <!-- 主畫面 -->
+    <div id="app" class="hidden">
+        <header class="duo-header">
+            <div class="logo">🦉 日語無盡特訓</div>
+            <div class="stats-bar">
+                <div class="stat" title="愛心">❤️ <span id="lives-count">5</span></div>
+                <div class="stat" title="連擊">🔥 <span id="streak-count">0</span></div>
+                <div class="stat" title="經驗值">⭐ <span id="xp-count">0</span> XP</div>
             </div>
-            
-            <div class="progress-bar-container">
-                <div id="progress-fill" class="progress-fill"></div>
+            <div class="actions">
+                <span id="user-chip" class="user-chip"></span>
+                <button class="icon-btn" id="btn-tutorial" title="新手教學">❓</button>
+                <button class="icon-btn" id="btn-theme" title="主題">🌓</button>
+                <button class="icon-btn" id="btn-settings" title="語音與設定">⚙️</button>
+                <button class="icon-btn" id="btn-logout" title="登出">⏻</button>
             </div>
+        </header>
 
-            <div id="quiz-box">
-                <div class="q-title-row">
-                    <h3 id="quiz-question">載入題目中...</h3>
-                    <button id="tts-btn" class="icon-btn">🔊</button>
+        <nav class="level-selector" id="level-nav">
+            <button class="level-btn active" data-level="N5">N5 初級</button>
+            <button class="level-btn" data-level="N4">N4 基礎</button>
+            <button class="level-btn" data-level="N3">N3 中級</button>
+            <button class="level-btn" data-level="N2">N2 高級</button>
+            <button class="level-btn" data-level="N1">N1 專家</button>
+            <button class="level-btn review-btn" id="btn-review">📕 錯題本 <span id="wrong-count">0</span></button>
+        </nav>
+
+        <main class="duo-main">
+            <section class="duo-card">
+                <h2>📚 本級重點（點 🔊 聽例句）</h2>
+                <div id="knowledge-box" class="knowledge-container"></div>
+            </section>
+
+            <section class="duo-card quiz-section">
+                <div class="quiz-header-bar">
+                    <span id="quiz-type-tag" class="badge">單字挑戰</span>
+                    <span id="progress-text">進度 1 / 5</span>
                 </div>
-                <div id="quiz-options" class="options-grid"></div>
-            </div>
+                <div class="progress-bar-container"><div id="progress-fill" class="progress-fill"></div></div>
 
-            <div id="feedback-footer" class="feedback-footer hidden">
-                <div id="feedback-msg" class="feedback-msg"></div>
-                <button id="next-question-btn" class="duo-btn primary">繼續</button>
-            </div>
-        </section>
-    </main>
+                <div id="quiz-box">
+                    <div class="q-title-row">
+                        <h3 id="quiz-question">載入題目中...</h3>
+                        <button id="tts-btn" class="icon-btn" title="朗讀" hidden>🔊</button>
+                    </div>
+                    <div id="quiz-options" class="options-grid"></div>
+                    <div class="voice-row">
+                        <button id="voice-btn" class="duo-btn ghost sm">🎤 語音作答</button>
+                        <span class="muted small">也可以按鍵盤 1–4 選擇</span>
+                    </div>
+                </div>
 
-    <!-- 載入所有 JS 模組 -->
+                <div id="feedback-footer" class="feedback-footer hidden">
+                    <div id="feedback-msg" class="feedback-msg"></div>
+                    <button id="next-question-btn" class="duo-btn">繼續</button>
+                </div>
+            </section>
+
+            <section class="duo-card">
+                <h2>🗣 跟讀練習（點 🎤 跟讀，70 分以上算通過）</h2>
+                <div id="pron-box"></div>
+            </section>
+        </main>
+    </div>
+
+    <!-- 設定 -->
+    <div id="settings" class="modal hidden">
+        <div class="card modal-card">
+            <h2>🎧 語音與設定</h2>
+            <div class="row">
+                <div><b>朗讀語速</b><div class="small muted">目前 <span id="set-rate-v">0.9x</span></div></div>
+                <input type="range" id="set-rate" min="0.5" max="1.5" step="0.1" value="0.9">
+            </div>
+            <div class="row">
+                <div><b>朗讀聲音</b><div class="small muted">可選系統安裝的日文聲音</div></div>
+                <select id="set-voice" class="field sel"></select>
+            </div>
+            <label class="row toggle-row">
+                <div><b>自動朗讀</b><div class="small muted">切換題目時自動播放</div></div>
+                <span class="toggle"><input type="checkbox" id="set-auto"><span></span></span>
+            </label>
+            <label class="row toggle-row">
+                <div><b>自動語音作答</b><div class="small muted">每題開始時自動聆聽你的答案</div></div>
+                <span class="toggle"><input type="checkbox" id="set-voiceans"><span></span></span>
+            </label>
+            <label class="row toggle-row">
+                <div><b>靜音</b><div class="small muted">關閉朗讀與音效</div></div>
+                <span class="toggle"><input type="checkbox" id="set-mute"><span></span></span>
+            </label>
+            <div class="row">
+                <div><b>測試聲音</b><div class="small muted">確認喇叭是否正常</div></div>
+                <button class="duo-btn ghost sm" id="set-test">🔊 試聽</button>
+            </div>
+            <div class="row">
+                <div><b>重設進度</b><div class="small muted">清除 XP、連擊與錯題本</div></div>
+                <button class="duo-btn ghost sm danger" id="set-reset">重設</button>
+            </div>
+            <button class="duo-btn full" id="set-close">完成</button>
+        </div>
+    </div>
+
+    <!-- 新手教學 -->
+    <div id="tutorial" class="modal hidden">
+        <div class="card modal-card center" id="tut-card"></div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <!-- 模組載入順序很重要 -->
     <script src="data.js"></script>
+    <script src="storage.js"></script>
     <script src="sound.js"></script>
     <script src="tts.js"></script>
-    <script src="storage.js"></script>
+    <script src="stt.js"></script>
     <script src="app.js"></script>
+    <script src="auth.js"></script>
 </body>
 </html>

@@ -1,10 +1,20 @@
+/* 語音朗讀（Web Speech Synthesis） */
 const TTS = {
-    speak(text) {
-        if (!('speechSynthesis' in window)) return;
-        window.speechSynthesis.cancel(); // 停止先前的發音
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'ja-JP';
-        utterance.rate = 0.9; // 語速微調
-        window.speechSynthesis.speak(utterance);
-    }
+  rate: 0.9,
+  voiceName: "",
+  muted: false,
+  voices() {
+    if (!("speechSynthesis" in window)) return [];
+    return speechSynthesis.getVoices().filter(v => /^ja/i.test(v.lang));
+  },
+  speak(text) {
+    if (!("speechSynthesis" in window) || this.muted || !text) return;
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "ja-JP";
+    u.rate = this.rate;
+    const v = this.voices().find(x => x.name === this.voiceName);
+    if (v) u.voice = v;
+    speechSynthesis.speak(u);
+  }
 };

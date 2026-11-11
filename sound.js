@@ -1,29 +1,24 @@
+/* 答對／答錯音效（Web Audio，不需要外部檔案） */
 const SoundFX = {
-    ctx: null,
-    init() {
-        if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)();
-    },
-    playCorrect() {
-        this.init();
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        osc.connect(gain); gain.connect(this.ctx.destination);
-        osc.frequency.setValueAtTime(523.25, this.ctx.currentTime); // C5
-        osc.frequency.setValueAtTime(659.25, this.ctx.currentTime + 0.1); // E5
-        gain.gain.setValueAtTime(0.2, this.ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.3);
-        osc.start(); osc.stop(this.ctx.currentTime + 0.3);
-    },
-    playWrong() {
-        this.init();
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        osc.type = "sawtooth";
-        osc.connect(gain); gain.connect(this.ctx.destination);
-        osc.frequency.setValueAtTime(220, this.ctx.currentTime); // A3
-        osc.frequency.setValueAtTime(164.81, this.ctx.currentTime + 0.15); // E3
-        gain.gain.setValueAtTime(0.2, this.ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.4);
-        osc.start(); osc.stop(this.ctx.currentTime + 0.4);
-    }
+  ctx: null,
+  muted: false,
+  _ctx() {
+    if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+    return this.ctx;
+  },
+  _tone(steps, type, dur) {
+    if (this.muted) return;
+    try {
+      const c = this._ctx(), t = c.currentTime;
+      const osc = c.createOscillator(), gain = c.createGain();
+      osc.type = type;
+      osc.connect(gain); gain.connect(c.destination);
+      steps.forEach(([f, at]) => osc.frequency.setValueAtTime(f, t + at));
+      gain.gain.setValueAtTime(0.2, t);
+      gain.gain.exponentialRampToValueAtTime(0.01, t + dur);
+      osc.start(t); osc.stop(t + dur);
+    } catch (e) { /* 忽略不支援的環境 */ }
+  },
+  playCorrect() { this._tone([[523.25, 0], [659.25, 0.1]], "sine", 0.3); },
+  playWrong() { this._tone([[220, 0], [164.81, 0.15]], "sawtooth", 0.4); }
 };

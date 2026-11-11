@@ -1,0 +1,22 @@
+/* 每日目標與學習里程碑 */
+.progress-card-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+.progress-card-heading h2 { margin-bottom: .2rem; }
+.progress-card-heading p { margin: 0; }
+.daily-count { color: var(--g); white-space: nowrap; }
+.daily-track { height: 14px; margin: 1rem 0 1.2rem; overflow: hidden; border-radius: 99px; background: var(--bd); }
+.daily-fill { width: 0; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--g), #9be15d); transition: width .35s ease; }
+.achievement-title { margin: .2rem 0 .65rem; font-size: 1rem; }
+.achievement-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); gap: .55rem; }
+.achievement { display: flex; align-items: center; gap: .55rem; min-height: 58px; padding: .6rem .7rem; border: 2px solid var(--bd); border-radius: 14px; background: var(--soft); color: var(--mut); }
+.achievement.unlocked { border-color: rgba(88, 204, 2, .5); color: var(--tx); background: rgba(88, 204, 2, .1); }
+.achievement-icon { font-size: 1.45rem; filter: grayscale(1); opacity: .55; }
+.achievement.unlocked .achievement-icon { filter: none; opacity: 1; }
+.achievement-label { display: block; font-size: .88rem; font-weight: 800; line-height: 1.25; }
+.achievement-hint { display: block; margin-top: .15rem; font-size: .75rem; }
+@media (max-width: 480px) {
+    .progress-card-heading { flex-direction: column; gap: .35rem; }
+    .achievement-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .daily-fill { transition: none; }
+}

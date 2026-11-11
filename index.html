@@ -95,16 +95,27 @@
 
             <section class="duo-card progress-card" aria-labelledby="daily-title">
                 <div class="progress-card-heading">
-                    <div>
+                    <div class="progress-title-wrap">
+                        <span class="progress-kicker">YOUR LEARNING JOURNEY</span>
                         <h2 id="daily-title">🎯 每日學習目標</h2>
                         <p id="daily-message" class="muted small">每天完成 10 題，讓日語進步不中斷！</p>
                     </div>
-                    <strong class="daily-count"><span id="daily-count">0</span> / 10 題</strong>
+                    <div class="daily-count-bubble"><strong><span id="daily-count">0</span></strong><span>/ 10 題</span></div>
                 </div>
                 <div class="daily-track" role="progressbar" aria-label="每日答題進度" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0">
                     <div id="daily-fill" class="daily-fill"></div>
                 </div>
-                <h3 class="achievement-title">🏅 學習里程碑</h3>
+                <div class="activity-panel">
+                    <div class="activity-heading">
+                        <div><h3>📊 學習活動</h3><p id="activity-summary" class="muted small">累積練習，持續進步</p></div>
+                        <div class="chart-tabs" role="group" aria-label="統計期間">
+                            <button class="chart-tab active" data-period="week" type="button" aria-pressed="true">本週</button>
+                            <button class="chart-tab" data-period="month" type="button" aria-pressed="false">本月</button>
+                        </div>
+                    </div>
+                    <div id="activity-chart" class="activity-chart" role="img" aria-label="最近一週每日答題統計"></div>
+                </div>
+                <div class="achievement-heading"><h3 class="achievement-title">🏅 學習里程碑</h3><span id="achievement-count" class="achievement-total">0 / 5</span></div>
                 <div id="achievement-list" class="achievement-list" aria-live="polite"></div>
             </section>
 
@@ -154,6 +165,18 @@
     <!-- 新手教學 -->
     <div id="tutorial" class="modal hidden">
         <div class="card modal-card center" id="tut-card"></div>
+    </div>
+
+    <!-- 每日目標與成就通知 -->
+    <div id="milestone-modal" class="modal hidden" role="alertdialog" aria-modal="true" aria-labelledby="milestone-title" aria-describedby="milestone-message">
+        <div class="card modal-card milestone-card">
+            <button id="milestone-close-icon" class="icon-btn milestone-close" type="button" aria-label="關閉通知">×</button>
+            <div id="milestone-icon" class="milestone-icon" aria-hidden="true">🎉</div>
+            <p class="progress-kicker">NICE WORK!</p>
+            <h2 id="milestone-title">今日目標達成！</h2>
+            <p id="milestone-message" class="muted">太棒了，今天的學習目標完成！</p>
+            <button id="milestone-close" class="duo-btn full" type="button">太棒了！</button>
+        </div>
     </div>
 
     <div id="toast" class="toast"></div>

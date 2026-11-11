@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>N1-N5 日文全方位學習網</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>🇯🇵 日文全方位檢定學習網 (N5 - N1)</h1>
+        <p>選擇你的目標級別，解鎖文法、單字與自我挑戰測驗！</p>
+    </header>
+
+    <nav class="level-selector">
+        <button class="level-btn active" data-level="N5">N5 初級</button>
+        <button class="level-btn" data-level="N4">N4 基礎</button>
+        <button class="level-btn" data-level="N3">N3 中級</button>
+        <button class="level-btn" data-level="N2">N2 高級</button>
+        <button class="level-btn" data-level="N1">N1 專家</button>
+    </nav>
+
+    <main>
+        <section class="card-container">
+            <h2>📚 重點文法與句型</h2>
+            <div id="grammar-box" class="content-box">載入中...</div>
+        </section>
+
+        <section class="card-container">
+            <h2>📖 核心單字清單</h2>
+            <div id="vocab-box" class="content-box">載入中...</div>
+        </section>
+
+        <section class="card-container quiz-section">
+            <h2>✍️ 級別自我檢定測驗</h2>
+            <div id="quiz-box">
+                <p id="quiz-question">請選擇級別開始測驗</p>
+                <div id="quiz-options"></div>
+                <button id="next-btn" style="display:none;">下一題</button>
+                <p id="quiz-result"></p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Japanese Learning Hub. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
